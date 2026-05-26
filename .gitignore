@@ -1,0 +1,15 @@
+# Python Virtual Environment
+ml/venv/
+__pycache__/
+
+# Node Modules
+frontend/node_modules/
+
+# Machine Learning Data & Weights
+ml/processed_data/
+ml/training/weights/
+*.pt
+*.pth
+
+# Environment variables
+.env
