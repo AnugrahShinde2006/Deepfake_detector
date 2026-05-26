@@ -4,6 +4,7 @@ __pycache__/
 
 # Node Modules
 frontend/node_modules/
+node_modules/
 
 # Machine Learning Data & Weights
 ml/processed_data/
@@ -13,3 +14,7 @@ ml/training/weights/
 
 # Environment variables
 .env
+
+# Temporary Media
+temp_uploads/
+*.MP4

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Upload, ShieldAlert, CheckCircle2, Activity, ShieldCheck } from 'lucide-react'
+import { Upload, ShieldAlert, CheckCircle2, Activity, ShieldCheck, X } from 'lucide-react'
 import axios from 'axios'
 
 function App() {
@@ -12,6 +12,12 @@ function App() {
       setFile(e.target.files[0])
       setResult(null)
     }
+  }
+
+  const handleClear = (e) => {
+    e.preventDefault()
+    setFile(null)
+    setResult(null)
   }
 
   const handleUpload = async () => {
@@ -59,24 +65,50 @@ function App() {
               Upload Media
             </h2>
             
-            <div className="border-2 border-dashed border-slate-700 hover:border-cyan-500/50 transition-colors bg-slate-900/50 rounded-2xl p-10 text-center relative z-10">
-              <input 
-                type="file" 
-                onChange={handleFileChange} 
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                accept="video/*,audio/*,image/*"
-              />
-              <div className="flex flex-col items-center gap-3">
-                <div className="p-4 bg-slate-800 rounded-full text-slate-400">
-                  <Upload className="w-6 h-6" />
+            <div className="border-2 border-dashed border-slate-700 hover:border-cyan-500/50 transition-colors bg-slate-900/50 rounded-2xl p-10 text-center relative z-10 flex flex-col items-center justify-center min-h-[240px]">
+              {!file && (
+                <input 
+                  type="file" 
+                  onChange={handleFileChange} 
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  accept="video/*,audio/*,image/*"
+                />
+              )}
+              
+              {!file ? (
+                <div className="flex flex-col items-center gap-3 pointer-events-none">
+                  <div className="p-4 bg-slate-800 rounded-full text-slate-400">
+                    <Upload className="w-6 h-6" />
+                  </div>
+                  <p className="text-sm text-slate-300 font-medium">
+                    Drag & drop or click to browse
+                  </p>
+                  <p className="text-xs text-slate-500">
+                    Supports MP4, AVI, WAV, MP3, JPG, PNG
+                  </p>
                 </div>
-                <p className="text-sm text-slate-300 font-medium">
-                  {file ? file.name : "Drag & drop or click to browse"}
-                </p>
-                <p className="text-xs text-slate-500">
-                  Supports MP4, AVI, WAV, MP3, JPG, PNG
-                </p>
-              </div>
+              ) : (
+                <div className="flex flex-col items-center gap-4 relative z-20">
+                  <div className="p-4 bg-cyan-500/10 border border-cyan-500/30 rounded-full text-cyan-400">
+                    <CheckCircle2 className="w-8 h-8" />
+                  </div>
+                  <div className="text-center">
+                    <p className="text-sm text-slate-200 font-medium break-all max-w-[250px] line-clamp-2">
+                      {file.name}
+                    </p>
+                    <p className="text-xs text-slate-500 mt-1">
+                      {(file.size / (1024 * 1024)).toFixed(2)} MB
+                    </p>
+                  </div>
+                  <button 
+                    onClick={handleClear}
+                    className="mt-2 flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-red-500/20 text-slate-300 hover:text-red-400 rounded-lg text-sm transition-colors border border-slate-700 hover:border-red-500/50"
+                  >
+                    <X className="w-4 h-4" />
+                    Remove Media
+                  </button>
+                </div>
+              )}
             </div>
 
             <button 
